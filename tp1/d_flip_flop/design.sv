@@ -1,29 +1,28 @@
-// Design
-// D Flip-Flop
-module d_flip_flop (
-    input wire clk,         // Clock signal
-    input wire rst,         // Asynchronous reset, active high
-    input wire data_in,     // Data input 
-    output wire q_out,      // Data output
-  	output wire q_bar       // Inverted data output
+// Design: D Flip-Flop com reset assíncrono e saída invertida
+module d_flip_flop_custom (
+    input wire clk_signal,      // Sinal de clock
+    input wire rst_signal,      // Reset assíncrono, ativo alto
+    input wire din,             // Entrada de dados
+    output wire dout,           // Saída de dados
+    output wire dout_inv        // Saída de dados invertida
 );
 
-    reg q_reg;              // Internal register to hold the state
+    reg state;                  // Registro interno para armazenar o estado
 
-    // Assign the inverted output
-    assign q_bar = ~q_reg;
+    // Atribuição da saída invertida
+    assign dout_inv = ~state;
 
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            // Asynchronous reset to 0 when reset is high
-            q_reg <= 1'b0;
+    always @(posedge clk_signal or posedge rst_signal) begin
+        if (rst_signal) begin
+            // Reset assíncrono para 0 quando reset está alto
+            state <= 1'b0;
         end else begin
-            // Capture data_in on the rising edge of the clock
-            q_reg <= data_in;
+            // Captura a entrada de dados na borda de subida do clock
+            state <= din;
         end
     end
 
-    // Assign the register value to the output
-    assign q_out = q_reg;
+    // Atribuição do valor do registro à saída
+    assign dout = state;
 
 endmodule

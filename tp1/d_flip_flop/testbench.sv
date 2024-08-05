@@ -1,19 +1,19 @@
 // Testbench
-module d_flip_flop_tb;
+module d_flip_flop_custom_tb;
 
     reg clk_tb;            // Clock signal for testbench
     reg rst_tb;            // Reset signal for testbench
-    reg data_in_tb;        // Data input for testbench
-    wire q_out_tb;         // Data output from DUT
-    wire q_bar_tb;         // Inverted data output from DUT
+    reg din_tb;            // Data input for testbench
+    wire dout_tb;          // Data output from DUT
+    wire dout_inv_tb;      // Inverted data output from DUT
 
     // Instantiate the design under test (DUT)
-    d_flip_flop DUT (
-        .clk(clk_tb), 
-        .rst(rst_tb), 
-        .data_in(data_in_tb), 
-      	.q_out(q_out_tb),
-      	.q_bar(q_bar_tb)
+    d_flip_flop_custom DUT (
+        .clk_signal(clk_tb), 
+        .rst_signal(rst_tb), 
+        .din(din_tb), 
+        .dout(dout_tb),
+        .dout_inv(dout_inv_tb)
     );
 
     initial begin
@@ -24,19 +24,19 @@ module d_flip_flop_tb;
 
     initial begin
         // Dump waveform
-        $dumpfile("d_flip_flop.vcd");
+        $dumpfile("d_flip_flop_custom.vcd");
         $dumpvars(1);
 
         // Test case 1: Apply reset
         $display("Apply reset.");
         rst_tb = 1;
-        data_in_tb = 1'bx; // Don't care during reset
+        din_tb = 1'bx; // Don't care during reset
         #10 display_signals;
 
-        // Test case 2: Release reset and set data_in to 1
-        $display("Release reset and set data_in to 1.");
+        // Test case 2: Release reset and set din to 1
+        $display("Release reset and set din to 1.");
         rst_tb = 0;
-        data_in_tb = 1;
+        din_tb = 1;
         #10 display_signals;
 
         // Test case 3: Toggle clock and observe outputs
@@ -44,9 +44,9 @@ module d_flip_flop_tb;
         #10 display_signals;
         #10 display_signals;
 
-        // Test case 4: Set data_in to 0 and observe outputs
-        $display("Set data_in to 0 and observe.");
-        data_in_tb = 0;
+        // Test case 4: Set din to 0 and observe outputs
+        $display("Set din to 0 and observe.");
+        din_tb = 0;
         #10 display_signals;
 
         // Test case 5: Apply reset again
@@ -54,10 +54,10 @@ module d_flip_flop_tb;
         rst_tb = 1;
         #10 display_signals;
 
-        // Test case 6: Release reset and set data_in to 1 again
-        $display("Release reset and set data_in to 1 again.");
+        // Test case 6: Release reset and set din to 1 again
+        $display("Release reset and set din to 1 again.");
         rst_tb = 0;
-        data_in_tb = 1;
+        din_tb = 1;
         #10 display_signals;
 
         // End simulation
@@ -66,7 +66,7 @@ module d_flip_flop_tb;
 
     // Task to display the signals
     task display_signals;
-      #1 $display("Time=%0t | data_in=%b | q_out=%b | q_bar=%b", $time, data_in_tb, q_out_tb, q_bar_tb);
+      #1 $display("Time=%0t | din=%b | dout=%b | dout_inv=%b", $time, din_tb, dout_tb, dout_inv_tb);
     endtask
 
 endmodule
