@@ -1,72 +1,72 @@
 // Testbench
-module d_flip_flop_custom_tb;
+module dff_asynch_reset_tb;
 
-    reg clk_tb;            // Clock signal for testbench
-    reg rst_tb;            // Reset signal for testbench
-    reg din_tb;            // Data input for testbench
-    wire dout_tb;          // Data output from DUT
-    wire dout_inv_tb;      // Inverted data output from DUT
+    reg clk_tb;            // Sinal de clock para o testbench
+    reg reset_tb;          // Sinal de reset para o testbench
+    reg d_tb;              // Entrada de dados para o testbench
+    wire q_tb;             // Saída de dados do DUT
+    wire qb_tb;            // Saída invertida de dados do DUT
 
-    // Instantiate the design under test (DUT)
-    d_flip_flop_custom DUT (
+    // Instanciar o design sob teste (DUT)
+    dff_asynch_reset DUT (
         .clk_signal(clk_tb), 
-        .rst_signal(rst_tb), 
-        .din(din_tb), 
-        .dout(dout_tb),
-        .dout_inv(dout_inv_tb)
+        .reset_signal(reset_tb), 
+        .d_input(d_tb), 
+        .q_output(q_tb),
+        .qb_output(qb_tb)
     );
 
     initial begin
-        // Initialize the clock signal
+        // Inicializar o sinal de clock
         clk_tb = 0;
-        forever #5 clk_tb = ~clk_tb; // Toggle clock every 5 time units
+        forever #5 clk_tb = ~clk_tb; // Alternar clock a cada 5 unidades de tempo
     end
 
     initial begin
-        // Dump waveform
-        $dumpfile("d_flip_flop_custom.vcd");
+        // Gerar waveform
+        $dumpfile("dff_asynch_reset.vcd");
         $dumpvars(1);
 
-        // Test case 1: Apply reset
-        $display("Apply reset.");
-        rst_tb = 1;
-        din_tb = 1'bx; // Don't care during reset
+        // Caso de teste 1: Aplicar reset
+        $display("Aplicar reset.");
+        reset_tb = 1;
+        d_tb = 1'bx; // Indiferente durante o reset
         #10 display_signals;
 
-        // Test case 2: Release reset and set din to 1
-        $display("Release reset and set din to 1.");
-        rst_tb = 0;
-        din_tb = 1;
+        // Caso de teste 2: Liberar reset e definir d para 1
+        $display("Liberar reset e definir d para 1.");
+        reset_tb = 0;
+        d_tb = 1;
         #10 display_signals;
 
-        // Test case 3: Toggle clock and observe outputs
-        $display("Toggle clock.");
+        // Caso de teste 3: Alternar clock e observar saídas
+        $display("Alternar clock.");
         #10 display_signals;
         #10 display_signals;
 
-        // Test case 4: Set din to 0 and observe outputs
-        $display("Set din to 0 and observe.");
-        din_tb = 0;
+        // Caso de teste 4: Definir d para 0 e observar saídas
+        $display("Definir d para 0 e observar.");
+        d_tb = 0;
         #10 display_signals;
 
-        // Test case 5: Apply reset again
-        $display("Apply reset again.");
-        rst_tb = 1;
+        // Caso de teste 5: Aplicar reset novamente
+        $display("Aplicar reset novamente.");
+        reset_tb = 1;
         #10 display_signals;
 
-        // Test case 6: Release reset and set din to 1 again
-        $display("Release reset and set din to 1 again.");
-        rst_tb = 0;
-        din_tb = 1;
+        // Caso de teste 6: Liberar reset e definir d para 1 novamente
+        $display("Liberar reset e definir d para 1 novamente.");
+        reset_tb = 0;
+        d_tb = 1;
         #10 display_signals;
 
-        // End simulation
+        // Encerrar simulação
         $finish;
     end
 
-    // Task to display the signals
+    // Tarefa para exibir os sinais
     task display_signals;
-      #1 $display("Time=%0t | din=%b | dout=%b | dout_inv=%b", $time, din_tb, dout_tb, dout_inv_tb);
+      #1 $display("Tempo=%0t | d=%b | q=%b | qb=%b", $time, d_tb, q_tb, qb_tb);
     endtask
 
 endmodule
