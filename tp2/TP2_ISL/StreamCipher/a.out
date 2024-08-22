@@ -1,0 +1,185 @@
+#! /usr/local/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/local/lib/ivl/system.vpi";
+:vpi_module "/usr/local/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/local/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/local/lib/ivl/v2005_math.vpi";
+:vpi_module "/usr/local/lib/ivl/va_math.vpi";
+:vpi_module "/usr/local/lib/ivl/v2009.vpi";
+S_0x1055ba0 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_0x1061180 .scope module, "tb_StreamCipher" "tb_StreamCipher" 3 2;
+ .timescale 0 0;
+v0x108e1e0_0 .var "clk", 0 0;
+v0x108e2a0_0 .net "decrypted_message", 7 0, L_0x108f0e0;  1 drivers
+v0x108e360_0 .net "encrypted_message", 7 0, L_0x108ec50;  1 drivers
+v0x108e460_0 .net "key_stream", 3 0, v0x108dda0_0;  1 drivers
+v0x108e530_0 .var "message", 7 0;
+v0x108e620_0 .var "reset", 0 0;
+S_0x1061310 .scope module, "uut" "StreamCipher" 3 13, 4 21 0, S_0x1061180;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "reset";
+    .port_info 2 /INPUT 8 "message";
+    .port_info 3 /OUTPUT 8 "encrypted_message";
+    .port_info 4 /OUTPUT 8 "decrypted_message";
+    .port_info 5 /OUTPUT 4 "key_stream";
+L_0x108eb90 .functor XOR 4, L_0x108eaa0, v0x108dda0_0, C4<0000>, C4<0000>;
+L_0x108ee30 .functor XOR 4, L_0x108ed90, v0x108dda0_0, C4<0000>, C4<0000>;
+L_0x108f070 .functor XOR 4, L_0x108efd0, v0x108dda0_0, C4<0000>, C4<0000>;
+L_0x108f350 .functor XOR 4, L_0x108f220, v0x108dda0_0, C4<0000>, C4<0000>;
+v0x108d2c0_0 .net *"_ivl_12", 3 0, L_0x108ed90;  1 drivers
+v0x108d3a0_0 .net *"_ivl_13", 3 0, L_0x108ee30;  1 drivers
+v0x108d480_0 .net *"_ivl_18", 3 0, L_0x108efd0;  1 drivers
+v0x108d540_0 .net *"_ivl_19", 3 0, L_0x108f070;  1 drivers
+v0x108d620_0 .net *"_ivl_25", 3 0, L_0x108f220;  1 drivers
+v0x108d750_0 .net *"_ivl_26", 3 0, L_0x108f350;  1 drivers
+v0x108d830_0 .net *"_ivl_5", 3 0, L_0x108eaa0;  1 drivers
+v0x108d910_0 .net *"_ivl_6", 3 0, L_0x108eb90;  1 drivers
+v0x108d9f0_0 .net "clk", 0 0, v0x108e1e0_0;  1 drivers
+v0x108db20_0 .net "decrypted_message", 7 0, L_0x108f0e0;  alias, 1 drivers
+v0x108dbe0_0 .net "encrypted_message", 7 0, L_0x108ec50;  alias, 1 drivers
+v0x108dcc0_0 .net "key_stream", 3 0, v0x108dda0_0;  alias, 1 drivers
+v0x108dda0_0 .var "key_stream_reg", 3 0;
+v0x108de80_0 .net "lfsr_out", 3 0, v0x108d050_0;  1 drivers
+v0x108df70_0 .net "message", 7 0, v0x108e530_0;  1 drivers
+v0x108e030_0 .net "reset", 0 0, v0x108e620_0;  1 drivers
+L_0x108eaa0 .part v0x108e530_0, 0, 4;
+L_0x108ec50 .concat8 [ 4 4 0 0], L_0x108eb90, L_0x108ee30;
+L_0x108ed90 .part v0x108e530_0, 4, 4;
+L_0x108efd0 .part L_0x108ec50, 0, 4;
+L_0x108f0e0 .concat8 [ 4 4 0 0], L_0x108f070, L_0x108f350;
+L_0x108f220 .part L_0x108ec50, 4, 4;
+S_0x1066aa0 .scope module, "lfsr" "LFSR" 4 34, 4 2 0, S_0x1061310;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "reset";
+    .port_info 2 /OUTPUT 4 "lfsr_out";
+L_0x108e8a0 .functor XOR 1, L_0x108e710, L_0x108e800, C4<0>, C4<0>;
+v0x1066cd0_0 .net *"_ivl_1", 0 0, L_0x108e710;  1 drivers
+v0x108cde0_0 .net *"_ivl_3", 0 0, L_0x108e800;  1 drivers
+v0x108cec0_0 .net "clk", 0 0, v0x108e1e0_0;  alias, 1 drivers
+v0x108cf90_0 .net "feedback", 0 0, L_0x108e8a0;  1 drivers
+v0x108d050_0 .var "lfsr_out", 3 0;
+v0x108d180_0 .net "reset", 0 0, v0x108e620_0;  alias, 1 drivers
+E_0x106c8e0 .event posedge, v0x108d180_0, v0x108cec0_0;
+L_0x108e710 .part v0x108d050_0, 0, 1;
+L_0x108e800 .part v0x108d050_0, 3, 1;
+    .scope S_0x1066aa0;
+T_0 ;
+    %wait E_0x106c8e0;
+    %load/vec4 v0x108d180_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.0, 8;
+    %pushi/vec4 1, 0, 4;
+    %assign/vec4 v0x108d050_0, 0;
+    %jmp T_0.1;
+T_0.0 ;
+    %load/vec4 v0x108d050_0;
+    %parti/s 3, 0, 2;
+    %load/vec4 v0x108cf90_0;
+    %concat/vec4; draw_concat_vec4
+    %assign/vec4 v0x108d050_0, 0;
+T_0.1 ;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_0x1061310;
+T_1 ;
+    %wait E_0x106c8e0;
+    %load/vec4 v0x108e030_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_1.0, 8;
+    %pushi/vec4 0, 0, 4;
+    %assign/vec4 v0x108dda0_0, 0;
+    %jmp T_1.1;
+T_1.0 ;
+    %load/vec4 v0x108de80_0;
+    %assign/vec4 v0x108dda0_0, 0;
+T_1.1 ;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0x1061180;
+T_2 ;
+    %delay 10, 0;
+    %load/vec4 v0x108e1e0_0;
+    %inv;
+    %store/vec4 v0x108e1e0_0, 0, 1;
+    %jmp T_2;
+    .thread T_2;
+    .scope S_0x1061180;
+T_3 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x108e1e0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x108e620_0, 0, 1;
+    %pushi/vec4 0, 0, 8;
+    %store/vec4 v0x108e530_0, 0, 8;
+    %delay 10, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x108e620_0, 0, 1;
+    %pushi/vec4 170, 0, 8;
+    %store/vec4 v0x108e530_0, 0, 8;
+    %delay 10, 0;
+    %vpi_call/w 3 43 "$display", "Teste 1:" {0 0 0};
+    %vpi_call/w 3 44 "$display", "Mensagem Original: %b", v0x108e530_0 {0 0 0};
+    %vpi_call/w 3 45 "$display", "Chave: %b", v0x108e460_0 {0 0 0};
+    %vpi_call/w 3 46 "$display", "Mensagem Criptografada: %b", v0x108e360_0 {0 0 0};
+    %delay 10, 0;
+    %vpi_call/w 3 51 "$display", "Mensagem Descriptografada: %b", v0x108e2a0_0 {0 0 0};
+    %pushi/vec4 240, 0, 8;
+    %store/vec4 v0x108e530_0, 0, 8;
+    %delay 10, 0;
+    %vpi_call/w 3 58 "$display", "Teste 2:" {0 0 0};
+    %vpi_call/w 3 59 "$display", "Mensagem Original: %b", v0x108e530_0 {0 0 0};
+    %vpi_call/w 3 60 "$display", "Chave: %b", v0x108e460_0 {0 0 0};
+    %vpi_call/w 3 61 "$display", "Mensagem Criptografada: %b", v0x108e360_0 {0 0 0};
+    %delay 10, 0;
+    %vpi_call/w 3 66 "$display", "Mensagem Descriptografada: %b", v0x108e2a0_0 {0 0 0};
+    %pushi/vec4 0, 0, 8;
+    %store/vec4 v0x108e530_0, 0, 8;
+    %delay 10, 0;
+    %vpi_call/w 3 73 "$display", "Teste 3:" {0 0 0};
+    %vpi_call/w 3 74 "$display", "Mensagem Original: %b", v0x108e530_0 {0 0 0};
+    %vpi_call/w 3 75 "$display", "Chave: %b", v0x108e460_0 {0 0 0};
+    %vpi_call/w 3 76 "$display", "Mensagem Criptografada: %b", v0x108e360_0 {0 0 0};
+    %delay 10, 0;
+    %vpi_call/w 3 81 "$display", "Mensagem Descriptografada: %b", v0x108e2a0_0 {0 0 0};
+    %pushi/vec4 85, 0, 8;
+    %store/vec4 v0x108e530_0, 0, 8;
+    %delay 10, 0;
+    %vpi_call/w 3 88 "$display", "Teste 4:" {0 0 0};
+    %vpi_call/w 3 89 "$display", "Mensagem Original: %b", v0x108e530_0 {0 0 0};
+    %vpi_call/w 3 90 "$display", "Chave: %b", v0x108e460_0 {0 0 0};
+    %vpi_call/w 3 91 "$display", "Mensagem Criptografada: %b", v0x108e360_0 {0 0 0};
+    %delay 10, 0;
+    %vpi_call/w 3 96 "$display", "Mensagem Descriptografada: %b", v0x108e2a0_0 {0 0 0};
+    %pushi/vec4 15, 0, 8;
+    %store/vec4 v0x108e530_0, 0, 8;
+    %delay 10, 0;
+    %vpi_call/w 3 102 "$display", "Teste 5 - Mensagem 1:" {0 0 0};
+    %vpi_call/w 3 103 "$display", "Mensagem Original: %b", v0x108e530_0 {0 0 0};
+    %vpi_call/w 3 104 "$display", "Chave: %b", v0x108e460_0 {0 0 0};
+    %vpi_call/w 3 105 "$display", "Mensagem Criptografada: %b", v0x108e360_0 {0 0 0};
+    %delay 10, 0;
+    %vpi_call/w 3 110 "$display", "Mensagem Descriptografada: %b", v0x108e2a0_0 {0 0 0};
+    %pushi/vec4 240, 0, 8;
+    %store/vec4 v0x108e530_0, 0, 8;
+    %delay 10, 0;
+    %vpi_call/w 3 116 "$display", "Teste 5 - Mensagem 2:" {0 0 0};
+    %vpi_call/w 3 117 "$display", "Mensagem Original: %b", v0x108e530_0 {0 0 0};
+    %vpi_call/w 3 118 "$display", "Chave: %b", v0x108e460_0 {0 0 0};
+    %vpi_call/w 3 119 "$display", "Mensagem Criptografada: %b", v0x108e360_0 {0 0 0};
+    %delay 10, 0;
+    %vpi_call/w 3 124 "$display", "Mensagem Descriptografada: %b", v0x108e2a0_0 {0 0 0};
+    %vpi_call/w 3 127 "$finish" {0 0 0};
+    %end;
+    .thread T_3;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "-";
+    "testbench.sv";
+    "design.sv";
